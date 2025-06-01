@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { fetchCharacters } from './services/api';
+import './styles/App.css';
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -83,30 +84,38 @@ function App() {
     }
   };
 
-  if (loading) return <p>Yükleniyor...</p>;
+  if (loading) return <p className="loading-text">Yükleniyor...</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Rick and Morty Karakterleri</h1>
+    <div className="app-container">
+      <h1 className="app-title">Rick and Morty Karakterleri</h1>
 
       {/* Filtreler ve Sayfa Boyutu */}
-      <div style={{ marginBottom: '1rem' }}>
+      <div className="filter-section">
         <input
           type="text"
           placeholder="İsim ile ara"
           value={tempNameFilter}
           onChange={(e) => setTempNameFilter(e.target.value)}
-          style={{ marginRight: '1rem' }}
+          className="filter-input"
         />
 
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} style={{ marginRight: '1rem' }}>
+        <select 
+          value={statusFilter} 
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="filter-select"
+        >
           <option value="">Durum (Tümü)</option>
           <option value="alive">Alive</option>
           <option value="dead">Dead</option>
           <option value="unknown">Unknown</option>
         </select>
 
-        <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)} style={{ marginRight: '1rem' }}>
+        <select 
+          value={genderFilter} 
+          onChange={(e) => setGenderFilter(e.target.value)}
+          className="filter-select"
+        >
           <option value="">Cinsiyet (Tümü)</option>
           <option value="female">Female</option>
           <option value="male">Male</option>
@@ -114,7 +123,11 @@ function App() {
           <option value="unknown">Unknown</option>
         </select>
 
-        <select value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))}>
+        <select 
+          value={pageSize} 
+          onChange={(e) => setPageSize(Number(e.target.value))}
+          className="filter-select"
+        >
           <option value={20}>20</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
@@ -124,22 +137,32 @@ function App() {
 
       {/* Tablo veya mesaj */}
       {sortedCharacters.length === 0 ? (
-        <p>Filtrelere uygun karakter bulunamadı.</p>
+        <p className="no-results-text">Filtrelere uygun karakter bulunamadı.</p>
       ) : (
         <>
-          <table border="1" cellPadding="5" cellSpacing="0" style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="character-table">
             <thead>
               <tr>
-                <th style={{ cursor: 'pointer' }} onClick={() => sortTable('name')}>Ad {sortField === 'name' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</th>
-                <th style={{ cursor: 'pointer' }} onClick={() => sortTable('species')}>Tür {sortField === 'species' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</th>
-                <th style={{ cursor: 'pointer' }} onClick={() => sortTable('status')}>Durum {sortField === 'status' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</th>
-                <th style={{ cursor: 'pointer' }} onClick={() => sortTable('gender')}>Cinsiyet {sortField === 'gender' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</th>
-                <th style={{ cursor: 'pointer' }} onClick={() => sortTable('type')}>Türü {sortField === 'type' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}</th>
+                <th onClick={() => sortTable('name')}>
+                  Ad {sortField === 'name' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+                </th>
+                <th onClick={() => sortTable('species')}>
+                  Tür {sortField === 'species' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+                </th>
+                <th onClick={() => sortTable('status')}>
+                  Durum {sortField === 'status' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+                </th>
+                <th onClick={() => sortTable('gender')}>
+                  Cinsiyet {sortField === 'gender' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+                </th>
+                <th onClick={() => sortTable('type')}>
+                  Türü {sortField === 'type' ? (sortOrder === 'asc' ? '▲' : '▼') : ''}
+                </th>
               </tr>
             </thead>
             <tbody>
               {sortedCharacters.map((char) => (
-                <tr key={char.id} style={{ cursor: 'pointer' }} onClick={() => setSelectedCharacter(char)}>
+                <tr key={char.id} onClick={() => setSelectedCharacter(char)}>
                   <td>{char.name}</td>
                   <td>{char.species}</td>
                   <td>{char.status}</td>
@@ -151,12 +174,20 @@ function App() {
           </table>
 
           {/* Sayfalama */}
-          <div style={{ marginTop: 20 }}>
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>
+          <div className="pagination-container">
+            <button 
+              className="pagination-button"
+              onClick={() => setPage((p) => Math.max(1, p - 1))} 
+              disabled={page === 1}
+            >
               Önceki
             </button>
-            <span style={{ margin: '0 10px' }}>Sayfa: {page}</span>
-            <button onClick={() => setPage((p) => p + 1)} disabled={!info.next && characters.length < pageSize}>
+            <span className="page-info">Sayfa: {page}</span>
+            <button 
+              className="pagination-button"
+              onClick={() => setPage((p) => p + 1)} 
+              disabled={!info.next && characters.length < pageSize}
+            >
               Sonraki
             </button>
           </div>
@@ -165,16 +196,18 @@ function App() {
 
       {/* Detay */}
       {selectedCharacter && (
-        <div style={{ marginTop: 20, padding: 15, border: '1px solid #ccc', borderRadius: 8 }}>
+        <div className="character-detail">
           <h2>{selectedCharacter.name} Detayları</h2>
-          <img src={selectedCharacter.image} alt={selectedCharacter.name} style={{ width: 150, borderRadius: 8 }} />
+          <img src={selectedCharacter.image} alt={selectedCharacter.name} />
           <p><strong>Tür:</strong> {selectedCharacter.species}</p>
           <p><strong>Durum:</strong> {selectedCharacter.status}</p>
           <p><strong>Cinsiyet:</strong> {selectedCharacter.gender}</p>
           <p><strong>Türü:</strong> {selectedCharacter.type || '-'}</p>
           <p><strong>Orijin:</strong> {selectedCharacter.origin?.name}</p>
           <p><strong>Konum:</strong> {selectedCharacter.location?.name}</p>
-          <button onClick={() => setSelectedCharacter(null)}>Detayı Kapat</button>
+          <button className="close-detail-button" onClick={() => setSelectedCharacter(null)}>
+            Detayı Kapat
+          </button>
         </div>
       )}
     </div>
