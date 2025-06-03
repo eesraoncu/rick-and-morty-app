@@ -98,4 +98,3 @@ CSS değişkenleri kullanılarak tutarlı bir tema uygulanmıştır:
 - Responsive tasarım breakpoint'leri
 
 Proje Linki: [https://github.com/eesraoncu/rick-and-morty-app](https://github.com/eesraoncu/rick-and-morty-app)
->>>>>>> c7a140a1c2fa1b491a2698fb775857f38fe72c36
