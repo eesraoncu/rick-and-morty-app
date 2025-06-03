@@ -1,5 +1,5 @@
-import { createContext, useContext, useReducer, type PropsWithChildren, useEffect } from 'react';
-import { FilterState, Character, ApiResponse } from '../types';
+import { createContext, useContext, useReducer, type PropsWithChildren, useEffect, useCallback } from 'react';
+import { FilterState, Character, ApiResponse, SortField } from '../types';
 import { fetchCharacters } from '../services/api';
 
 interface CharacterContextType {
@@ -98,7 +98,7 @@ export const CharacterProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: 'UPDATE_FILTERS', payload: newFilters });
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     dispatch({ type: 'SET_LOADING', payload: true });
     try {
       const queryParams = new URLSearchParams();
@@ -137,8 +137,8 @@ export const CharacterProvider = ({ children }: PropsWithChildren) => {
 
       // Sonuçları sırala
       const sortedResults = allResults.sort((a, b) => {
-        const aValue = String(a[sortBy]).toLowerCase();
-        const bValue = String(b[sortBy]).toLowerCase();
+        const aValue = String(a[sortBy as keyof Character]).toLowerCase();
+        const bValue = String(b[sortBy as keyof Character]).toLowerCase();
         return sortOrder === 'asc' 
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
@@ -163,16 +163,16 @@ export const CharacterProvider = ({ children }: PropsWithChildren) => {
         } 
       });
     } catch (error) {
-      console.error('Error fetching data:', error); // Debug log
+      console.error('Error fetching data:', error);
       dispatch({ type: 'SET_ERROR', payload: error instanceof Error ? error.message : 'Bir hata oluştu' });
     }
-  };
+  }, [state.filters]);
 
   // Filtrelerde değişiklik olduğunda verileri yeniden yükle
   useEffect(() => {
     console.log('Filters changed, fetching data...'); // Debug log
     fetchData();
-  }, [state.filters]);
+  }, [fetchData]);
 
   return (
     <CharacterContext.Provider
