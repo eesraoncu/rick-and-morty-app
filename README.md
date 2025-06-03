@@ -97,24 +97,5 @@ CSS değişkenleri kullanılarak tutarlı bir tema uygulanmıştır:
 - Boşluk ve kenar yuvarlaklığı değerleri
 - Responsive tasarım breakpoint'leri
 
-<<<<<<< HEAD
-## 📝 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
-
-## 👥 Katkıda Bulunma
-
-1. Bu depoyu fork edin
-2. Yeni bir özellik dalı oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some amazing feature'`)
-4. Dalınıza push edin (`git push origin feature/amazing-feature`)
-5. Bir Pull Request oluşturun
-
-## 📞 İletişim
-
-Proje Sahibi - [@github-username](https://github.com/github-username)
-
-Proje Linki: [https://github.com/github-username/rick-and-morty-app](https://github.com/github-username/rick-and-morty-app)
-=======
 Proje Linki: [https://github.com/eesraoncu/rick-and-morty-app](https://github.com/eesraoncu/rick-and-morty-app)
 >>>>>>> c7a140a1c2fa1b491a2698fb775857f38fe72c36
