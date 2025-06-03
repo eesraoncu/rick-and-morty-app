@@ -41,7 +41,7 @@ rick-and-morty-app/
 Projeyi Github Pages ile çalıştırmak için:
 
 https://eesraoncu.github.io/rick-and-morty-app/
-Yukarıdaki linki tarayıcınızda açabilirsiniz.
+linkini tarayıcınızda açabilirsiniz.
 
 Projeyi yerel makinenizde çalıştırmak için:
 
