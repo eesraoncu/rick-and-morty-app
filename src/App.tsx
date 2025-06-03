@@ -1,15 +1,19 @@
+//Bu kısımda React kütüphanesinden bileşenler, API çağrıları için gerekli fonksiyonlar ve CSS stilleri içe aktarılır.
 import React, { useEffect, useState } from 'react';
 import { fetchCharacters } from './services/api';
 import { Character, ApiResponse } from './types';
 import './styles/App.css';
 
 function App() {
+  // Yükleme durumu, sayfa numarası, toplam bilgi ve sayfa boyutu için state tanımları  
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [info, setInfo] = useState<ApiResponse['info']>({ count: 0, pages: 0, next: null, prev: null });
   const [pageSize, setPageSize] = useState(20);
 
+  // Filtreler ve sıralama için state tanımları
+  // İsim filtresi için geçici state, debouncing için kullanılır
   const [nameFilter, setNameFilter] = useState('');
   const [tempNameFilter, setTempNameFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -18,7 +22,7 @@ function App() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
 
-  // Debounce
+  //Kullanıcının yazdığı isme göre 500ms bekleyip filtreleme yapılmasını sağlar (debounce)
   useEffect(() => {
     const handler = setTimeout(() => {
       setNameFilter(tempNameFilter);
@@ -27,7 +31,7 @@ function App() {
     return () => clearTimeout(handler);
   }, [tempNameFilter]);
 
-  // API çağrısı
+  // API çağrısı kullanarak filtreler ve sayfa boyutuna göre karakterleri alır
   useEffect(() => {
     const totalNeeded = pageSize;
     const pagesToFetch = Math.ceil(totalNeeded / 20);
@@ -39,6 +43,7 @@ function App() {
     if (genderFilter) query.append('gender', genderFilter);
 
     setLoading(true);
+    // Gerekli sayıda sayfa için API çağrıları yapılır
     Promise.all(
       Array.from({ length: pagesToFetch }, (_, i) => fetchCharacters(page + i, query.toString()))
     )
@@ -58,11 +63,12 @@ function App() {
       });
   }, [page, nameFilter, statusFilter, genderFilter, pageSize]);
 
-  // Filtre değiştiğinde sayfayı sıfırla
+   // Filtreler değiştiğinde sayfa numarası sıfırlanır
   useEffect(() => {
     setPage(1);
   }, [nameFilter, statusFilter, genderFilter, pageSize]);
 
+  // Karakterleri seçilen alana göre sıralar
   const sortedCharacters = React.useMemo(() => {
     if (!sortField) return characters;
     return [...characters].sort((a, b) => {
@@ -76,6 +82,7 @@ function App() {
     });
   }, [characters, sortField, sortOrder]);
 
+  // Tablodaki sütunlara tıklanınca sıralama yönünü değiştirir
   const sortTable = (field: keyof Character) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -85,13 +92,14 @@ function App() {
     }
   };
 
+  // Yüklenme ekranı
   if (loading) return <p className="loading-text">Yükleniyor...</p>;
 
   return (
     <div className="app-container">
       <h1 className="app-title">Rick and Morty Karakterleri</h1>
 
-      {/* Filtreler ve Sayfa Boyutu */}
+      {/* Filtreler ve sayfa boyutu ayarı */}
       <div className="filter-section">
         <input
           type="text"
@@ -136,7 +144,7 @@ function App() {
         </select>
       </div>
 
-      {/* Tablo veya mesaj */}
+      {/* Tablo ya da sonuç bulunamadı mesajı */}
       {sortedCharacters.length === 0 ? (
         <p className="no-results-text">Filtrelere uygun karakter bulunamadı.</p>
       ) : (
@@ -199,7 +207,7 @@ function App() {
             </tbody>
           </table>
 
-          {/* Sayfalama */}
+          {/* Sayfalama kontrolleri */}
           <div className="pagination-container">
             <button 
               className="pagination-button"

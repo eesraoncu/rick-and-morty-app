@@ -1,23 +1,23 @@
 /* Root Variables */
 :root {
-  --primary-color: #00b5cc;  /* Rick's portal gun color */
-  --secondary-color: #526e2d;  /* Pickle Rick green */
-  --background-color: #1a1a1a;  /* Dark background */
-  --card-background: #2a2a2a;  /* Darker card background */
-  --text-color: #ffffff;  /* Light text for dark theme */
-  --text-secondary: #b7b7b7;  /* Secondary text color */
-  --accent-color: #ff0080;  /* Bright pink accent */
+  --primary-color: #00b5cc;  
+  --secondary-color: #526e2d;
+  --background-color: #1a1a1a;
+  --card-background: #2a2a2a; 
+  --text-color: #ffffff; 
+  --text-secondary: #b7b7b7; 
+  --accent-color: #ff0080;
   --border-radius: 12px;
   --spacing: 16px;
   --card-shadow: 0 4px 20px rgba(0, 181, 204, 0.2);
   --table-border-color: rgba(0, 181, 204, 0.3);
 }
 
-/* Reset and Base Styles */
+/* Genel Reset ve Temel Stil Ayarları */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;  /* Padding ve border'ı genişliğe dahil eder */
 }
 
 body {
@@ -32,17 +32,17 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;  /* Kod blokları için font */
 }
 
-/* Main Container */
+/* Uygulama Ana Kapsayıcısı */
 .app-container {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Header Styles */
+/* Başlık Stili */
 .app-title {
   color: var(--primary-color);
   font-size: 2.5rem;
@@ -51,7 +51,7 @@ code {
   text-shadow: 0 0 10px rgba(0, 181, 204, 0.3);
 }
 
-/* Filter Section */
+/* Filtre Bölümü */
 .filter-section {
   margin-bottom: 1rem;
   display: flex;
@@ -60,6 +60,7 @@ code {
   align-items: center;
 }
 
+/* Filtre Input Alanı */
 .filter-input {
   padding: 8px 12px;
   border: 1px solid var(--table-border-color);
@@ -69,6 +70,7 @@ code {
   min-width: 200px;
 }
 
+/* Filtre Seçim Alanı (Dropdown) */
 .filter-select {
   padding: 8px 12px;
   border: 1px solid var(--table-border-color);
@@ -78,7 +80,7 @@ code {
   cursor: pointer;
 }
 
-/* Table Styles */
+/* Karakter Tablosu */
 .character-table {
   width: 100%;
   border-collapse: collapse;
@@ -88,6 +90,7 @@ code {
   overflow: hidden;
 }
 
+/* Tablo Hücreleri */
 .character-table th,
 .character-table td {
   padding: 12px;
@@ -95,6 +98,7 @@ code {
   border: 1px solid var(--table-border-color);
 }
 
+/* Başlık Hücreleri */
 .character-table th {
   background-color: rgba(0, 181, 204, 0.1);
   color: var(--primary-color);
@@ -102,10 +106,12 @@ code {
   transition: background-color 0.3s ease;
 }
 
+/* Başlık Üzerine Gelindiğinde */
 .character-table th:hover {
   background-color: rgba(0, 181, 204, 0.2);
 }
 
+/* Satır Üzerine Gelindiğinde */
 .character-table tr {
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -115,11 +121,12 @@ code {
   background-color: var(--card-background);
 }
 
+/* Seçili Satır */
 .selected-row {
   background-color: var(--card-background) !important;
 }
 
-/* Detay Satırı Stilleri */
+/* Açılan Detay Satırı */
 .detail-row {
   background-color: var(--card-background);
 }
@@ -129,7 +136,7 @@ code {
   border-top: none !important;
 }
 
-/* Pagination */
+/* Sayfalama */
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -148,12 +155,14 @@ code {
   transition: all 0.3s ease;
 }
 
+/* Sayfalama Butonları Devre Dışı */
 .pagination-button:disabled {
   background-color: var(--text-secondary);
   cursor: not-allowed;
   opacity: 0.7;
 }
 
+/* Sayfalama Butonları Hover Efekti */
 .pagination-button:not(:disabled):hover {
   background-color: #008899;
   transform: translateY(-2px);
@@ -165,7 +174,7 @@ code {
   margin: 0 10px;
 }
 
-/* Character Detail Modal */
+/* Karakter Detay Kutusu */
 .character-detail {
   margin-top: 20px;
   padding: 20px;
@@ -195,6 +204,7 @@ code {
   color: var(--text-color);
 }
 
+/* Detay Kapatma Butonu */
 .close-detail-button {
   margin-top: 15px;
   padding: 8px 16px;
@@ -212,7 +222,7 @@ code {
   box-shadow: 0 4px 12px rgba(0, 181, 204, 0.3);
 }
 
-/* Loading and Error States */
+/* Yükleniyor / Hata / Sonuç Yok Durumları */
 .loading-text,
 .error-text,
 .no-results-text {
@@ -226,7 +236,7 @@ code {
   color: var(--accent-color);
 }
 
-/* Character Detail Inline Styles */
+/* Satır İçi Detay Görünümü */
 .character-detail-inline {
   padding: 20px;
   background-color: var(--card-background);
@@ -234,6 +244,7 @@ code {
   box-shadow: var(--card-shadow);
 }
 
+/* Detay Satırı İçeriği */
 .character-detail-content {
   display: flex;
   gap: 20px;
@@ -267,7 +278,7 @@ code {
   margin-right: 8px;
 }
 
-/* Responsive Design */
+/* Mobil Uyum (Responsive) */
 @media (max-width: 768px) {
   .filter-section {
     flex-direction: column;
